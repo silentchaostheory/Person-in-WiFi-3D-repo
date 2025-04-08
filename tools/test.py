@@ -5,11 +5,12 @@ import os.path as osp
 import time
 import warnings
 
-import mmcv
+import mmengine
 import torch
-from mmcv import Config, DictAction
+from mmengine import Config, DictAction
 from mmcv.cnn import fuse_conv_bn
-from mmcv.runner import (get_dist_info, init_dist, load_checkpoint,
+from mmengine.dist import (get_dist_info, init_dist) 
+from mmengine.runner import (load_checkpoint,
                          wrap_fp16_model)
 from mmdet.utils import (build_ddp, build_dp, compat_cfg, get_device,
                          replace_cfg_vals, setup_multi_processes,
@@ -215,7 +216,7 @@ def main():
     rank, _ = get_dist_info()
     # allows not to create
     if args.work_dir is not None and rank == 0:
-        mmcv.mkdir_or_exist(osp.abspath(args.work_dir))
+        mmengine.mkdir_or_exist(osp.abspath(args.work_dir))
         timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
         json_file = osp.join(args.work_dir, f'eval_{timestamp}.json')
 
@@ -257,7 +258,7 @@ def main():
     if rank == 0:
         if args.out:
             print(f'\nwriting results to {args.out}')
-            mmcv.dump(outputs, args.out)
+            mmengine.dump(outputs, args.out)
         kwargs = {} if args.eval_options is None else args.eval_options
         if args.format_only:
             dataset.format_results(outputs, **kwargs)
@@ -279,7 +280,7 @@ def main():
                 f.close()
             metric_dict = dict(config=args.config, metric=metric)
             if args.work_dir is not None and rank == 0:
-                mmcv.dump(metric_dict, json_file)
+                mmengine.dump(metric_dict, json_file)
 
 
 if __name__ == '__main__':
