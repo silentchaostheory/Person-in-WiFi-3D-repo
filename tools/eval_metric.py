@@ -1,8 +1,8 @@
 # Copyright (c) Hikvision Research Institute. All rights reserved.
 import argparse
 
-import mmcv
-from mmcv import Config, DictAction
+import mmengine
+from mmengine import Config, DictAction
 
 from opera.datasets import build_dataset
 
@@ -59,7 +59,7 @@ def main():
     cfg.data.test.test_mode = True
 
     dataset = build_dataset(cfg.data.test)
-    outputs = mmcv.load(args.pkl_results)
+    outputs = mmengine.load(args.pkl_results)
 
     kwargs = {} if args.eval_options is None else args.eval_options
     if args.format_only:
