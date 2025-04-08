@@ -6,12 +6,12 @@ import os.path as osp
 import time
 import warnings
 
-import mmcv
+import mmengine
 import torch
 import torch.distributed as dist
-from mmcv import Config, DictAction
-from mmcv.runner import get_dist_info, init_dist
-from mmcv.utils import get_git_hash
+from mmengine import Config, DictAction
+from mmengine.dist import get_dist_info, init_dist
+from mmengine.utils import get_git_hash
 from mmdet.utils import (collect_env, get_device, get_root_logger,
                          replace_cfg_vals, setup_multi_processes,
                          update_data_root)
@@ -179,7 +179,7 @@ def main():
         cfg.gpu_ids = range(world_size)
 
     # create work_dir
-    mmcv.mkdir_or_exist(osp.abspath(cfg.work_dir))
+    mmengine.mkdir_or_exist(osp.abspath(cfg.work_dir))
     # dump config
     cfg.dump(osp.join(cfg.work_dir, osp.basename(args.config)))
     # init the logger before other steps
