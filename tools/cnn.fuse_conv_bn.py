@@ -24,7 +24,7 @@ def _fuse_conv_bn(conv: nn.Module, bn: nn.Module) -> nn.Module:
     return conv
 
 
-[docs]def fuse_conv_bn(module: nn.Module) -> nn.Module:
+def fuse_conv_bn(module: nn.Module) -> nn.Module:
     """Recursively fuse conv and bn in a module.
 
     During inference, the functionary of batch norm layers is turned off
