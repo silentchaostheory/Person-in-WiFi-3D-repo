@@ -6,9 +6,10 @@ import logging
 import warnings
 from collections import OrderedDict
 
-import mmcv
+# import mmcv
+from mmengine.fileio import load, dump
 import numpy as np
-from mmcv.utils import print_log
+from mmengine.logging import print_log
 from terminaltables import AsciiTable
 
 from mmdet.datasets.api_wrappers import COCOeval
@@ -198,7 +199,7 @@ class CocoPoseDataset(CocoDataset):
             json_results = self._det2json(results)
             result_files['bbox'] = f'{outfile_prefix}.bbox.json'
             result_files['proposal'] = f'{outfile_prefix}.bbox.json'
-            mmcv.dump(json_results, result_files['bbox'])
+            dump(json_results, result_files['bbox'])
         elif isinstance(results[0], tuple):
             if isinstance(results[0][-1][0],
                           np.ndarray) and results[0][-1][0].ndim == 3:
@@ -206,19 +207,19 @@ class CocoPoseDataset(CocoDataset):
                 result_files['bbox'] = f'{outfile_prefix}.bbox.json'
                 result_files['proposal'] = f'{outfile_prefix}.bbox.json'
                 result_files['keypoints'] = f'{outfile_prefix}.keypoints.json'
-                mmcv.dump(json_results[0], result_files['bbox'])
-                mmcv.dump(json_results[1], result_files['keypoints'])
+                dump(json_results[0], result_files['bbox'])
+                dump(json_results[1], result_files['keypoints'])
             else:
                 json_results = self._segm2json(results)
                 result_files['bbox'] = f'{outfile_prefix}.bbox.json'
                 result_files['proposal'] = f'{outfile_prefix}.bbox.json'
                 result_files['segm'] = f'{outfile_prefix}.segm.json'
-                mmcv.dump(json_results[0], result_files['bbox'])
-                mmcv.dump(json_results[1], result_files['segm'])
+                dump(json_results[0], result_files['bbox'])
+                dump(json_results[1], result_files['segm'])
         elif isinstance(results[0], np.ndarray):
             json_results = self._proposal2json(results)
             result_files['proposal'] = f'{outfile_prefix}.proposal.json'
-            mmcv.dump(json_results, result_files['proposal'])
+            dump(json_results, result_files['proposal'])
         else:
             raise TypeError('invalid type of results')
         return result_files
@@ -302,7 +303,7 @@ class CocoPoseDataset(CocoDataset):
             if metric not in result_files:
                 raise KeyError(f'{metric} is not in results')
             try:
-                predictions = mmcv.load(result_files[metric])
+                predictions = load(result_files[metric])
                 if iou_type == 'segm':
                     # Refer to https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/coco.py#L331  # noqa
                     # When evaluating mask AP, if the results contain bbox,
