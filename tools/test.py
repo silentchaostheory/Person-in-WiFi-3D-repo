@@ -8,7 +8,7 @@ import warnings
 import mmengine
 import torch
 from mmengine import Config, DictAction
-from mmcv.cnn import fuse_conv_bn
+from cnn.fuse_conv_bn import fuse_conv_bn
 from mmengine.dist import (get_dist_info, init_dist) 
 from mmengine.runner import (load_checkpoint,
                          wrap_fp16_model)
