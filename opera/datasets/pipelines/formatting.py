@@ -1,5 +1,5 @@
 # Copyright (c) Hikvision Research Institute. All rights reserved.
-from mmcv.parallel import DataContainer as DC
+from mmengine.structures import BaseDataElements as BDE
 from mmdet.datasets.pipelines.formatting import to_tensor
 from mmdet.datasets.pipelines.formatting import DefaultFormatBundle \
     as MMDetDefaultFormatBundle
@@ -53,5 +53,5 @@ class DefaultFormatBundle(MMDetDefaultFormatBundle):
             for key in self.extra_keys:
                 if key not in results:
                     continue
-                results[key] = DC(to_tensor(results[key]))
+                results[key] = BDE(data=to_tensor(results[key]))
         return results
