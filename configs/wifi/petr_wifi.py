@@ -208,7 +208,10 @@ optimizer = dict(
             reference_points=dict(lr_mult=0.1))))
 optimizer_config = dict(grad_clip=dict(max_norm=0.1, norm_type=2))
 lr_config = dict(policy='step', step=[400])
-runner = dict(type='EpochBasedRunner', max_epochs=450)
+# runner = dict(type='EpochBasedRunner', max_epochs=450
+train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=450, val_interval=1)
+val_cfg = dict(type='ValLoop')
+test_cfg = dict(type='TestLoop')
 find_unused_parameters = True
 work_dir = '/home/yankangwei/opera-main/result/wifipose'
 auto_resume = False
