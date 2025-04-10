@@ -4,7 +4,7 @@ import math
 import cv2
 import numpy as np
 from numpy import random
-import mmcv
+# import mmcv
 from mmdet.datasets.pipelines import Resize as MMDetResize
 from mmdet.datasets.pipelines import RandomFlip as MMDetRandomFlip
 from mmdet.datasets.pipelines import RandomCrop as MMDetRandomCrop
