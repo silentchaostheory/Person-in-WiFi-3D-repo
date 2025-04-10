@@ -2,9 +2,10 @@
 import logging
 from collections import OrderedDict
 
-import mmcv
+# import mmcv
+from mmengine.fileio import load
 import numpy as np
-from mmcv.utils import print_log
+from mmengine.logging import print_log
 
 try:
     from xtcocotools.coco import COCO
@@ -264,7 +265,7 @@ class CrowdPoseDataset(CocoPoseDataset):
             if metric not in result_files:
                 raise KeyError(f'{metric} is not in results')
             try:
-                predictions = mmcv.load(result_files[metric])
+                predictions = load(result_files[metric])
                 cocoDt = cocoGt.loadRes(predictions)
             except IndexError:
                 print_log(
