@@ -6,9 +6,10 @@ import warnings
 from functools import partial
 
 import numpy as np
-from mmcv.parallel import collate
-from mmcv.runner import get_dist_info
-from mmcv.utils import TORCH_VERSION, Registry, build_from_cfg, digit_version
+# from mmcv.parallel import collate
+from mmengine.dist import get_dist_info
+from mmengine.utils import TORCH_VERSION, digit_version
+from mmengine.registry import Registry, build_from_cfg
 from torch.utils.data import DataLoader
 from mmdet.datasets.samplers import (GroupSampler, DistributedSampler,
                                      DistributedGroupSampler,
@@ -185,7 +186,7 @@ def build_dataloader(dataset,
         sampler=sampler,
         num_workers=num_workers,
         batch_sampler=batch_sampler,
-        collate_fn=partial(collate, samples_per_gpu=samples_per_gpu),
+        # collate_fn=partial(collate, samples_per_gpu=samples_per_gpu), # using default PyTorch collate
         pin_memory=False,
         worker_init_fn=init_fn,
         **kwargs)
