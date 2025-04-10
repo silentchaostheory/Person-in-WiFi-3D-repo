@@ -1,8 +1,8 @@
 # Copyright (c) Hikvision Research Institute. All rights reserved.
 import warnings
 
-from mmcv.cnn import MODELS as MMCV_MODELS
-from mmcv.utils import Registry
+# from mmcv.cnn import MODELS as MMCV_MODELS
+from mmengine.registry import Registry, MODELS as MMCV_MODELS
 
 MODELS = Registry('models', parent=MMCV_MODELS)
 
